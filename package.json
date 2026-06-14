@@ -1,0 +1,16 @@
+{
+  "name": "lithair-studio-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lithair authoring tools: a shared Rust-from-spec generator, a VS Code extension, and a (stubbed) generative test harness.",
+  "license": "MIT OR Apache-2.0",
+  "workspaces": [
+    "packages/generator",
+    "packages/vscode",
+    "packages/harness"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  }
+}

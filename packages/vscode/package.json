@@ -1,0 +1,61 @@
+{
+  "name": "lithair-studio",
+  "displayName": "Lithair Studio",
+  "description": "Authoring support for Lithair sites: snippets for the real derive attributes and builder API, an embedded spec-to-Rust playground, and project scaffolding. Layers on top of rust-analyzer, does not replace it.",
+  "version": "0.1.0",
+  "publisher": "lithair-placeholder",
+  "license": "MIT OR Apache-2.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "lithair",
+    "rust",
+    "declarative-model",
+    "scaffold"
+  ],
+  "extensionDependencies": [],
+  "activationEvents": [
+    "onLanguage:rust"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "rust",
+        "path": "./snippets/lithair.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "lithairStudio.openPlayground",
+        "title": "Lithair Studio: Playground"
+      },
+      {
+        "command": "lithairStudio.newProject",
+        "title": "Lithair Studio: New Project"
+      },
+      {
+        "command": "lithairStudio.run",
+        "title": "Lithair Studio: Run"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "vscode:prepublish": "tsc -p tsconfig.json",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "@lithair-studio/generator": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}

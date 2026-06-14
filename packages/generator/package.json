@@ -1,0 +1,19 @@
+{
+  "name": "@lithair-studio/generator",
+  "version": "0.1.0",
+  "description": "Pure TypeScript core: a Lithair spec model and generate(spec) -> compilable Rust source. Shared by the VS Code extension and the test harness.",
+  "license": "MIT OR Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test \"dist/__tests__/*.test.js\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}

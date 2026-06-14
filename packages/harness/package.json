@@ -1,0 +1,22 @@
+{
+  "name": "@lithair-studio/harness",
+  "version": "0.1.0",
+  "private": true,
+  "description": "STUB (Layer 2). Generative regression-test oracle: spec -> generate() -> Cargo project -> cargo check -> boot -> HTTP CRUD -> assert event-sourcing invariants. Shares @lithair-studio/generator with the extension. Not implemented yet.",
+  "license": "MIT OR Apache-2.0",
+  "bin": {
+    "lithair-harness": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@lithair-studio/generator": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}

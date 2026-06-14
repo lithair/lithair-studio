@@ -1,0 +1,130 @@
+{
+  "_comment": "Tokens verified against lithair @ v0.13.0: field attributes from lithair-macros/src/declarative_simple.rs, builder methods from lithair-core/src/app/builder.rs. Choices only offer tokens the parser actually recognizes. 'auto_timestamp' is intentionally omitted from #[lifecycle] choices because the v0.13 parser ignores it (inert).",
+
+  "Lithair server skeleton": {
+    "prefix": "lithairserver",
+    "description": "LithairServer builder skeleton ending in .serve().await",
+    "body": [
+      "use lithair_core::app::LithairServer;",
+      "use lithair_core::DeclarativeModel;",
+      "use serde::{Deserialize, Serialize};",
+      "",
+      "#[tokio::main]",
+      "async fn main() -> anyhow::Result<()> {",
+      "\tLithairServer::new()",
+      "\t\t.with_port(${1:8080})",
+      "\t\t.with_model::<${2:Todo}>(\"${3:./data/todos}\", \"${4:/api/todos}\")",
+      "\t\t.serve()",
+      "\t\t.await",
+      "}"
+    ]
+  },
+
+  "Lithair model struct": {
+    "prefix": "lithairmodel",
+    "description": "A DeclarativeModel struct (derives the full CRUD API)",
+    "body": [
+      "#[derive(Debug, Clone, Serialize, Deserialize, DeclarativeModel)]",
+      "struct ${1:Todo} {",
+      "\t#[db(primary_key, unique)]",
+      "\t#[lifecycle(immutable)]",
+      "\t#[http(expose)]",
+      "\tid: ${2:String},",
+      "",
+      "\t#[http(expose, validate = \"${3:non_empty}\")]",
+      "\t#[lifecycle(audited)]",
+      "\t${4:title}: String,",
+      "}"
+    ]
+  },
+
+  "db attribute": {
+    "prefix": "#[db",
+    "description": "Database constraints — primary_key, indexed, unique, nullable, fk",
+    "body": ["#[db(${1|primary_key,indexed,unique,nullable|})]"]
+  },
+
+  "db foreign key": {
+    "prefix": "#[db-fk",
+    "description": "Foreign key target collection",
+    "body": ["#[db(fk = \"${1:other_collection}\")]"]
+  },
+
+  "lifecycle attribute": {
+    "prefix": "#[lifecycle",
+    "description": "Lifecycle policy — immutable, audited, snapshot_only",
+    "body": ["#[lifecycle(${1|immutable,audited,snapshot_only|})]"]
+  },
+
+  "lifecycle versioned": {
+    "prefix": "#[lifecycle-versioned",
+    "description": "Keep N historical versions of the field",
+    "body": ["#[lifecycle(versioned = ${1:3})]"]
+  },
+
+  "http expose": {
+    "prefix": "#[http",
+    "description": "Expose field in the generated API",
+    "body": ["#[http(expose)]"]
+  },
+
+  "http validate": {
+    "prefix": "#[http-validate",
+    "description": "Field validation rule (compile-time check)",
+    "body": [
+      "#[http(expose, validate = \"${1|non_empty,not_negative,email,min_length(3),max_length(200),min_value(0),max_value(100)|}\")]"
+    ]
+  },
+
+  "permission attribute": {
+    "prefix": "#[permission",
+    "description": "RBAC read/write permission gate for the field",
+    "body": [
+      "#[permission(read = \"${1:ModelRead}\", write = \"${2:ModelWrite}\")]"
+    ]
+  },
+
+  "persistence attribute": {
+    "prefix": "#[persistence",
+    "description": "Persistence flags — replicate, track_history, cache",
+    "body": ["#[persistence(${1|replicate,track_history,cache|})]"]
+  },
+
+  "pinned attribute": {
+    "prefix": "#[pinned",
+    "description": "Pin the field in memory (retention exempt)",
+    "body": ["#[pinned]"]
+  },
+
+  "retention (struct-level)": {
+    "prefix": "#[retention",
+    "description": "Struct-level retention budget (count or duration). Place ABOVE the struct, not on a field.",
+    "body": ["#[retention(memory = ${1:1000})]"]
+  },
+
+  "schema version (struct-level)": {
+    "prefix": "#[schema",
+    "description": "Struct-level schema version for migrations",
+    "body": ["#[schema(version = ${1:1})]"]
+  },
+
+  "with_vhost": {
+    "prefix": "with_vhost",
+    "description": "Serve different content per Host header",
+    "body": [
+      ".with_vhost(\"${1:example.com}\", |v| v.with_frontend_at(\"${2:/}\", \"${3:public}\"))"
+    ]
+  },
+
+  "with_redirect": {
+    "prefix": "with_redirect",
+    "description": "Redirect one path to another",
+    "body": [".with_redirect(\"${1:/old}\", \"${2:/new}\")"]
+  },
+
+  "with_rbac_config": {
+    "prefix": "with_rbac",
+    "description": "Attach an RBAC configuration",
+    "body": [".with_rbac_config(${1:rbac_config()})"]
+  }
+}
